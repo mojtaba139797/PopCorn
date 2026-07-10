@@ -4,6 +4,9 @@ import Main from "./components/Main";
 import Search from "./components/Search";
 import NumResults from "./components/NumResults";
 import LayOut from "./components/LayOut";
+import Box from "./components/Box";
+import MovieList from "./components/MovieList";
+import movies from "./constants/movies";
 
 function App() {
   return (
@@ -13,7 +16,12 @@ function App() {
           <Search />
           <NumResults />
         </Navbar>
-        <Main />
+        <Main>
+          <Box>
+            <MovieList movies={movies} />
+          </Box>
+          <Box></Box>
+        </Main>
       </LayOut>
     </>
   );

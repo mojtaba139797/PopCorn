@@ -2,10 +2,11 @@ interface NavbarProp {
   children: React.ReactNode;
 }
 
-const Navbar = ({ children }: NavbarProp) => {
+const Navbar = (prop: NavbarProp) => {
+  const { children } = prop;
   return (
-    <nav className=" flex justify-around items-center mt-8 mx-8 h-20 rounded-xl bg-purple-400">
-      <b className="text-white text-2xl">popCorn</b>
+    <nav className=" flex justify-around items-center w-100 md:w-2xl lg:w-340 h-20 mt-4 md:mt-6 lg:mt-8 mx-2 md:mx-6 lg:mx-10 rounded-lg bg-purple-700">
+      <b className="text-white text-lg md:text-xl lg:text-3xl">popCorn</b>
       {children}
     </nav>
   );

@@ -1,11 +1,9 @@
-
-
-const Main = () => {
-  return (
-    <div>
-      Main
-    </div>
-  )
+interface MainProp {
+  children: React.ReactNode;
 }
 
-export default Main
+const Main = ({ children }: MainProp) => {
+  return <div className="flex gap-4">{children}</div>;
+};
+
+export default Main;
