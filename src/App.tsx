@@ -6,7 +6,10 @@ import NumResults from "./components/NumResults";
 import LayOut from "./components/LayOut";
 import Box from "./components/Box";
 import MovieList from "./components/MovieList";
+import WatchedMoviesList from "./components/WatchedMoviesList";
 import movies from "./constants/movies";
+import watched from "./constants/watched";
+import WatchedSummary from "./components/WatchedSummary";
 
 function App() {
   return (
@@ -14,13 +17,16 @@ function App() {
       <LayOut>
         <Navbar>
           <Search />
-          <NumResults />
+          <NumResults movies={movies} />
         </Navbar>
         <Main>
           <Box>
             <MovieList movies={movies} />
           </Box>
-          <Box></Box>
+          <Box>
+            <WatchedSummary watched={watched} />
+            <WatchedMoviesList watched={watched} />
+          </Box>
         </Main>
       </LayOut>
     </>

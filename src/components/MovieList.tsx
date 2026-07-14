@@ -14,7 +14,7 @@ interface MovieListProp {
 const MovieList = (prop: MovieListProp) => {
   const { movies } = prop;
   return (
-    <ul className=" flex flex-col gap-2 ml-2">
+    <ul className=" flex flex-col gap-3 ml-4">
       {movies.map((movie) => (
         <Movie
           key={movie.id}

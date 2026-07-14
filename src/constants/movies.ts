@@ -9,7 +9,7 @@ const movies = [
     id: 2,
     title: "The Godfather",
     year: "1972",
-    poster: "https://picsum.photos/id/1005/300/450",
+    poster: "https://picsum.photos/id/251/300/450",
   },
   {
     id: 3,
