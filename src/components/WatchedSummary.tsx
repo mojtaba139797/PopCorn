@@ -1,17 +1,8 @@
 import average from "../utils/average";
-
-interface watched {
-  id: number;
-  title: string;
-  year: string;
-  poster: string;
-  imdbrating: number;
-  userrating: number;
-  runtime: number;
-}
+import type WatchedType from "../type/WatchedType";
 
 interface WatchedSummaryProp {
-  watched: watched[];
+  watched: WatchedType[];
 }
 
 const WatchedSummary = (prop: WatchedSummaryProp) => {

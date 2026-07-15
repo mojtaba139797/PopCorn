@@ -1,14 +1,8 @@
 import Movie from "./Movie";
-
-interface movie {
-  id: number;
-  title: string;
-  year: string;
-  poster: string;
-}
+import type MovieType from "../type/MovieType";
 
 interface MovieListProp {
-  movies: movie[];
+  movies: MovieType[];
 }
 
 const MovieList = (prop: MovieListProp) => {

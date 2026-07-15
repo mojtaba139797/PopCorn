@@ -1,17 +1,8 @@
 import WatchedMovie from "./WatchedMovie";
-
-interface WatchedMovie {
-  id: number;
-  title: string;
-  poster: string;
-  year: string;
-  imdbrating: number;
-  userrating: number;
-  runtime: number;
-}
+import type WatchedType from "../type/WatchedType";
 
 interface WachtedMoviesListProp {
-  watched: WatchedMovie[];
+  watched: WatchedType[];
 }
 
 const WatchedMoviesList = (prop: WachtedMoviesListProp) => {
