@@ -1,23 +1,23 @@
 interface WatchedMovieProp {
-  title: string;
-  poster: string;
-  year: string;
+  Title: string;
+  Poster: string;
+  Year: string;
   imdbrating: number;
   userrating: number;
   runtime: number;
 }
 
 const WatchedMovie = (prop: WatchedMovieProp) => {
-  const { title, poster, imdbrating, userrating, runtime } = prop;
+  const { Title, Poster, imdbrating, userrating, runtime } = prop;
   return (
     <li className="flex flex-row gap-2">
       <img
-        src={poster}
-        alt={`${title}poster`}
+        src={Poster}
+        alt={`${Title}poster`}
         className="w-15 h-15 text-white"
       />
       <div className="flex flex-col">
-        <h3 className="text-white text-sm md:text-lg lg:text-xl">{title}</h3>
+        <h3 className="text-white text-sm md:text-lg lg:text-xl">{Title}</h3>
         <div className="flex flex-row gap-3">
           <p className="text-white">
             <span className="text-sm md:text-lg lg:text-xl">{imdbrating}</span>

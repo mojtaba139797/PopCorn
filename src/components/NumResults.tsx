@@ -1,12 +1,7 @@
-interface movie {
-  id: number;
-  title: string;
-  poster: string;
-  year: string;
-}
+import type { MovieType } from "../type/MovieType";
 
 interface NumResultsProp {
-  movies: movie[];
+  movies: MovieType[];
 }
 
 const NumResults = (prop: NumResultsProp) => {

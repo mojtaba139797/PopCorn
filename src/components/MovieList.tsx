@@ -1,5 +1,5 @@
 import Movie from "./Movie";
-import type MovieType from "../type/MovieType";
+import type { MovieType } from "../type/MovieType";
 
 interface MovieListProp {
   movies: MovieType[];
@@ -8,13 +8,13 @@ interface MovieListProp {
 const MovieList = (prop: MovieListProp) => {
   const { movies } = prop;
   return (
-    <ul className=" flex flex-col gap-3 ml-4">
+    <ul className=" flex flex-col gap-3 ml-4 pb-2">
       {movies.map((movie) => (
         <Movie
-          key={movie.id}
-          title={movie.title}
-          year={movie.year}
-          poster={movie.poster}
+          key={movie.imdbID}
+          Title={movie.Title}
+          Year={movie.Year}
+          Poster={movie.Poster}
         />
       ))}
     </ul>

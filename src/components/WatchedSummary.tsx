@@ -1,5 +1,5 @@
 import average from "../utils/average";
-import type WatchedType from "../type/WatchedType";
+import type { WatchedType } from "../type/WatchedType";
 
 interface WatchedSummaryProp {
   watched: WatchedType[];
