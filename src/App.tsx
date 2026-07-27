@@ -9,7 +9,7 @@ import Box from "./components/Box";
 import MovieList from "./components/MovieList";
 import WatchedMoviesList from "./components/WatchedMoviesList";
 import Loader from "./components/Loader";
-import movies from "./constants/movies";
+import MovieDetails from "./components/MovieDetails";
 import watched from "./constants/watched";
 import WatchedSummary from "./components/WatchedSummary";
 import type { MovieType } from "./type/MovieType";
@@ -18,8 +18,30 @@ function App() {
   const [query, setQuery] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [moviesFetched, setMoviesFetched] = useState<MovieType[]>([]);
+  const [selectedId, setSelectedId] = useState<string>();
 
   const API = `http://www.omdbapi.com/?s=${query}&apikey=6a8851aa`;
+
+  const DetailsApi = `http://www.omdbapi.com/?i=${selectedId}&apikey=6a8851aa`;
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const res = await fetch(DetailsApi);
+
+        if (!res.ok)
+          throw new Error("Something went wrong with fetching details");
+
+        const data = await res.json();
+
+        console.log(data);
+      } catch (error) {
+        console.error("Failed to fetch details");
+      }
+    };
+    if (selectedId === undefined) return;
+    fetchDetails();
+  }, [selectedId]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -62,11 +84,16 @@ function App() {
         </Navbar>
         <Main>
           <Box>
-            {isLoading ? <Loader /> : <MovieList movies={moviesFetched} />}
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <MovieList movies={moviesFetched} setSelectedId={setSelectedId} />
+            )}
           </Box>
           <Box>
             <WatchedSummary watched={watched} />
             <WatchedMoviesList watched={watched} />
+            <MovieDetails />
           </Box>
         </Main>
       </LayOut>
