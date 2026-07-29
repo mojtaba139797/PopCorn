@@ -3,13 +3,14 @@ interface MovieProp {
   Year: string;
   Poster: string;
   imdbId: string;
-  setSelectedId: (selectedId: string) => void;
+  handleClickMovie: (imdbId: string, showDetails: boolean) => void;
+  showDetails: boolean;
 }
 const Movie = (prop: MovieProp) => {
-  const { Title, Year, Poster, imdbId, setSelectedId } = prop;
+  const { Title, Year, Poster, imdbId, handleClickMovie, showDetails } = prop;
   return (
     <li
-      onClick={() => setSelectedId(imdbId)}
+      onClick={() => handleClickMovie(imdbId, showDetails)}
       className="flex flex-row gap-2 cursor-pointer hover:shadow-xl hover:bg-gray-600 hover:transition-all duration-300 ease-in-out border-b border-b-gray-500"
     >
       <img

@@ -8,7 +8,8 @@ import LayOut from "./components/LayOut";
 import Box from "./components/Box";
 import MovieList from "./components/MovieList";
 import WatchedMoviesList from "./components/WatchedMoviesList";
-import Loader from "./components/Loader";
+import Loader1 from "./components/Loader1";
+import Loader2 from "./components/Loader2";
 import MovieDetails from "./components/MovieDetails";
 import watched from "./constants/watched";
 import WatchedSummary from "./components/WatchedSummary";
@@ -16,38 +17,78 @@ import type { MovieType } from "./type/MovieType";
 
 function App() {
   const [query, setQuery] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading1, setIsLoading1] = useState<boolean>(false);
+  const [isLoading2, setIsLoading2] = useState<boolean>(false);
+  const [showDetails, setShowDetails] = useState<boolean>(false);
   const [moviesFetched, setMoviesFetched] = useState<MovieType[]>([]);
   const [selectedId, setSelectedId] = useState<string>();
+  const [Poster, setPoster] = useState<string>("");
+  const [Title, setTitle] = useState<string>("");
+  const [Released, setReleased] = useState<string>("");
+  const [Runtime, setRuntime] = useState<string>("");
+  const [Genre, setGenre] = useState<string>("");
+  const [imdbRating, setimdbRating] = useState<string>("");
+  const [Plot, setPlot] = useState<string>("");
+  const [Actors, setActors] = useState<string>("");
+  const [Director, setDirector] = useState<string>("");
+
+  const handleClickMovie = (imdbId: string, showDetails: boolean) => {
+    setSelectedId(imdbId);
+    setShowDetails(!showDetails);
+  };
+
+  const handleClickBackButton = () => {
+    setShowDetails(!showDetails);
+  };
 
   const API = `http://www.omdbapi.com/?s=${query}&apikey=6a8851aa`;
 
   const DetailsApi = `http://www.omdbapi.com/?i=${selectedId}&apikey=6a8851aa`;
 
   useEffect(() => {
+    if (selectedId === undefined) return;
+
+    const controller = new AbortController();
+
     const fetchDetails = async () => {
       try {
-        const res = await fetch(DetailsApi);
+        setIsLoading2(true);
+        const res = await fetch(DetailsApi, { signal: controller.signal });
 
         if (!res.ok)
           throw new Error("Something went wrong with fetching details");
 
-        const data = await res.json();
+        const details = await res.json();
 
-        console.log(data);
+        console.log(details);
+        setPoster(details.Poster);
+        setTitle(details.Title);
+        setReleased(details.Released);
+        setRuntime(details.Runtime);
+        setGenre(details.Genre);
+        setimdbRating(details.imdbRating);
+        setActors(details.Actors);
+        setPlot(details.Plot);
+        setDirector(details.Director);
       } catch (error) {
+        if (error instanceof Error && error.name === "AbortError") return;
         console.error("Failed to fetch details");
+      } finally {
+        setIsLoading2(false);
       }
     };
-    if (selectedId === undefined) return;
     fetchDetails();
+
+    return () => {
+      controller.abort();
+    };
   }, [selectedId]);
 
   useEffect(() => {
     const controller = new AbortController();
     const fetchMovies = async () => {
       try {
-        setIsLoading(true);
+        setIsLoading1(true);
         const res = await fetch(API, { signal: controller.signal });
 
         if (!res.ok)
@@ -62,7 +103,7 @@ function App() {
       } catch (error) {
         console.error("Failed to fetch movies:", error);
       } finally {
-        setIsLoading(false);
+        setIsLoading1(false);
       }
     };
 
@@ -84,16 +125,41 @@ function App() {
         </Navbar>
         <Main>
           <Box>
-            {isLoading ? (
-              <Loader />
+            {isLoading1 ? (
+              <Loader1 />
             ) : (
-              <MovieList movies={moviesFetched} setSelectedId={setSelectedId} />
+              <MovieList
+                movies={moviesFetched}
+                showDetails={showDetails}
+                handleClickMovie={handleClickMovie}
+              />
             )}
           </Box>
           <Box>
-            <WatchedSummary watched={watched} />
-            <WatchedMoviesList watched={watched} />
-            <MovieDetails />
+            {showDetails ? (
+              isLoading2 ? (
+                <Loader2 />
+              ) : (
+                <MovieDetails
+                  Poster={Poster}
+                  Title={Title}
+                  handleClickBackButton={handleClickBackButton}
+                  showDetails={showDetails}
+                  Released={Released}
+                  Runtime={Runtime}
+                  Genre={Genre}
+                  imdbRating={imdbRating}
+                  Plot={Plot}
+                  Director={Director}
+                  Actors={Actors}
+                />
+              )
+            ) : (
+              <>
+                <WatchedSummary watched={watched} />
+                <WatchedMoviesList watched={watched} />
+              </>
+            )}
           </Box>
         </Main>
       </LayOut>
