@@ -11,13 +11,12 @@ const WatchedMoviesList = (prop: WachtedMoviesListProp) => {
     <ul className=" flex flex-col gap-3 ml-4 mt-3 pb-2">
       {watched.map((w) => (
         <WatchedMovie
-          key={w.id}
+          key={w.imdbID}
           Title={w.Title}
           Poster={w.Poster}
-          Year={w.Year}
-          imdbrating={w.imdbrating}
-          userrating={w.userrating}
-          runtime={w.runtime}
+          imdbRating={w.imdbRating}
+          Userrating={w.Userrating}
+          Runtime={w.Runtime}
         />
       ))}
     </ul>

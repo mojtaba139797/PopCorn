@@ -8,9 +8,9 @@ interface WatchedSummaryProp {
 const WatchedSummary = (prop: WatchedSummaryProp) => {
   const { watched } = prop;
   const length = watched?.length || 0;
-  const avgImdbRating = average(watched.map((w) => w.imdbrating));
-  const avgRunTime = average(watched.map((w) => w.runtime));
-  const avgUserRating = average(watched.map((w) => w.userrating));
+  const avgImdbRating = average(watched.map((w) => w.imdbRating));
+  const avgRunTime = average(watched.map((w) => w.Runtime));
+  const avgUserRating = average(watched.map((w) => w.Userrating));
   return (
     <div className="text-white shadow-2xl py-2 w-45 md:w-65 lg:w-100 bg-gray-600 flex flex-col gap-3 -mt-6 rounded-lg">
       <h3 className="pl-1.5 md:pl-2.5 lg:pl-10 text-sm md:text-lg lg:text-xl">
@@ -22,15 +22,15 @@ const WatchedSummary = (prop: WatchedSummaryProp) => {
           <span>movies</span>
         </p>
         <p className="flex flex-col items-center">
-          <span>{avgImdbRating}</span>
+          <span>{avgImdbRating.toFixed(1)}</span>
           <span>imdbrating</span>
         </p>
         <p className="flex flex-col items-center">
-          <span>{avgUserRating}</span>
+          <span>{avgUserRating.toFixed(1)}</span>
           <span>userrating</span>
         </p>
         <p className="flex flex-col items-center">
-          <span>{avgRunTime}</span>
+          <span>{avgRunTime.toFixed(1)}</span>
           <span>min</span>
         </p>
       </div>

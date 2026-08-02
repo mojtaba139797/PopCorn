@@ -11,9 +11,10 @@ import WatchedMoviesList from "./components/WatchedMoviesList";
 import Loader1 from "./components/Loader1";
 import Loader2 from "./components/Loader2";
 import MovieDetails from "./components/MovieDetails";
-import watched from "./constants/watched";
 import WatchedSummary from "./components/WatchedSummary";
 import type { MovieType } from "./type/MovieType";
+import type { WatchedType } from "./type/WatchedType";
+import type { MovieDetailsType } from "./type/MovieDetailsType";
 
 function App() {
   const [query, setQuery] = useState<string>("");
@@ -22,19 +23,15 @@ function App() {
   const [showDetails, setShowDetails] = useState<boolean>(false);
   const [moviesFetched, setMoviesFetched] = useState<MovieType[]>([]);
   const [selectedId, setSelectedId] = useState<string>();
-  const [Poster, setPoster] = useState<string>("");
-  const [Title, setTitle] = useState<string>("");
-  const [Released, setReleased] = useState<string>("");
-  const [Runtime, setRuntime] = useState<string>("");
-  const [Genre, setGenre] = useState<string>("");
-  const [imdbRating, setimdbRating] = useState<string>("");
-  const [Plot, setPlot] = useState<string>("");
-  const [Actors, setActors] = useState<string>("");
-  const [Director, setDirector] = useState<string>("");
+  const [selectedMovie, setSelectedMovie] = useState<MovieDetailsType | null>(
+    null,
+  );
+  const [rate, setRate] = useState<number>();
+  const [watched, setWatched] = useState<WatchedType[]>([]);
 
-  const handleClickMovie = (imdbId: string, showDetails: boolean) => {
+  const handleClickMovie = (imdbId: string) => {
     setSelectedId(imdbId);
-    setShowDetails(!showDetails);
+    setShowDetails(true);
   };
 
   const handleClickBackButton = () => {
@@ -61,15 +58,9 @@ function App() {
         const details = await res.json();
 
         console.log(details);
-        setPoster(details.Poster);
-        setTitle(details.Title);
-        setReleased(details.Released);
-        setRuntime(details.Runtime);
-        setGenre(details.Genre);
-        setimdbRating(details.imdbRating);
-        setActors(details.Actors);
-        setPlot(details.Plot);
-        setDirector(details.Director);
+        details.Runtime = Number(details.Runtime.split(" ")[0]);
+        details.imdbRating = Number(details.imdbRating);
+        setSelectedMovie(details);
       } catch (error) {
         if (error instanceof Error && error.name === "AbortError") return;
         console.error("Failed to fetch details");
@@ -81,6 +72,7 @@ function App() {
 
     return () => {
       controller.abort();
+      setRate(0);
     };
   }, [selectedId]);
 
@@ -116,6 +108,8 @@ function App() {
       controller.abort();
     };
   }, [query]);
+
+  console.log(selectedMovie);
   return (
     <>
       <LayOut>
@@ -130,7 +124,6 @@ function App() {
             ) : (
               <MovieList
                 movies={moviesFetched}
-                showDetails={showDetails}
                 handleClickMovie={handleClickMovie}
               />
             )}
@@ -141,17 +134,13 @@ function App() {
                 <Loader2 />
               ) : (
                 <MovieDetails
-                  Poster={Poster}
-                  Title={Title}
                   handleClickBackButton={handleClickBackButton}
-                  showDetails={showDetails}
-                  Released={Released}
-                  Runtime={Runtime}
-                  Genre={Genre}
-                  imdbRating={imdbRating}
-                  Plot={Plot}
-                  Director={Director}
-                  Actors={Actors}
+                  movieDetails={selectedMovie}
+                  selectedId={selectedId}
+                  setWatched={setWatched}
+                  watched={watched}
+                  rate={rate}
+                  setRate={setRate}
                 />
               )
             ) : (

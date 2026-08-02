@@ -1,12 +1,10 @@
 interface WatchedType {
-  id: number;
-  Title: string;
-  Year: string;
-  Poster: string;
-  imdbrating: number;
-  userrating: number;
-  runtime: number;
   imdbID: string;
+  Title: string;
+  Poster: string;
+  imdbRating: number;
+  Userrating: number;
+  Runtime: number;
 }
 
 export type { WatchedType };

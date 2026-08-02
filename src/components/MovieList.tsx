@@ -3,23 +3,17 @@ import type { MovieType } from "../type/MovieType";
 
 interface MovieListProp {
   movies: MovieType[];
-  handleClickMovie: (imdbId: string, showDetails: boolean) => void;
-  showDetails: boolean;
+  handleClickMovie: (imdbId: string) => void;
 }
 
 const MovieList = (prop: MovieListProp) => {
-  const {
-    movies,
-    handleClickMovie,
-    showDetails,
-  } = prop;
+  const { movies, handleClickMovie } = prop;
   return (
     <ul className=" flex flex-col gap-3 ml-4 pb-2">
       {movies.map((movie) => (
         <Movie
           key={movie.imdbID}
           handleClickMovie={handleClickMovie}
-          showDetails={showDetails}
           imdbId={movie.imdbID}
           Title={movie.Title}
           Year={movie.Year}
