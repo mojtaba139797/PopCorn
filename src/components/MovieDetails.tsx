@@ -1,11 +1,9 @@
 import NumRate from "./NumRate";
 import arrNumRate from "../constants/arrNumRate";
 import type { WatchedType } from "../type/WatchedType";
-import type { MovieType } from "../type/MovieType";
 import type { MovieDetailsType } from "../type/MovieDetailsType";
 
 interface MovieDetailsProp {
-  movie: MovieType;
   movieDetails: MovieDetailsType | null;
   selectedId?: string;
   rate: number;
@@ -30,13 +28,14 @@ const MovieDetails = (prop: MovieDetailsProp) => {
     const exists = watched.some((movie) => movie.imdbID === selectedId);
     if (exists) return;
     if (!selectedId) return;
-    const watchedMovie = {
+    if (!movieDetails) return;
+    const watchedMovie: WatchedType = {
       imdbID: selectedId,
       Title: movieDetails.Title,
       Poster: movieDetails.Poster,
       Runtime: movieDetails.Runtime,
       imdbRating: movieDetails.imdbRating,
-      Userrating: rate.toString(),
+      Userrating: rate,
     };
     setWatched((prev) => [...prev, watchedMovie]);
     handleClickBackButton();
@@ -74,7 +73,7 @@ const MovieDetails = (prop: MovieDetailsProp) => {
           <div className="flex flex-row items-center gap-1 text-xs md:text-sm lg:text-base">
             <p>{movieDetails.Released}</p>
             <span>·</span>
-            <p>{movieDetails.Runtime}</p>
+            <p>{movieDetails.Runtime}min</p>
           </div>
           <p className="text-xs md:text-sm lg:text-base">
             {movieDetails.Genre}
@@ -108,8 +107,9 @@ const MovieDetails = (prop: MovieDetailsProp) => {
         </span>
         <button
           id="Add to list"
+          disabled={rate === 0}
           onClick={handleAddToList}
-          className="bg-purple-700 cursor-pointer text-[10px] md:text-xs lg:text-base font-semibold py-1 md:py-2 lg:py-3 text-white rounded-full"
+          className={` ${rate === 0 ? "bg-purple-300" : "bg-purple-700"} ${rate === 0 ? "hover:bg-purple-300" : "hover:bg-purple-800"} cursor-pointer text-[10px] md:text-xs lg:text-base font-semibold py-1 md:py-2 lg:py-3 text-white rounded-full`}
         >
           + Add to list
         </button>

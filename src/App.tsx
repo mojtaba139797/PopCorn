@@ -26,7 +26,7 @@ function App() {
   const [selectedMovie, setSelectedMovie] = useState<MovieDetailsType | null>(
     null,
   );
-  const [rate, setRate] = useState<number>();
+  const [rate, setRate] = useState<number>(0);
   const [watched, setWatched] = useState<WatchedType[]>([]);
 
   const handleClickMovie = (imdbId: string) => {
@@ -36,6 +36,10 @@ function App() {
 
   const handleClickBackButton = () => {
     setShowDetails(!showDetails);
+  };
+
+  const handleDelete = (imdbId: string) => {
+    setWatched((prev) => prev.filter((w) => w.imdbID !== imdbId));
   };
 
   const API = `http://www.omdbapi.com/?s=${query}&apikey=6a8851aa`;
@@ -146,7 +150,11 @@ function App() {
             ) : (
               <>
                 <WatchedSummary watched={watched} />
-                <WatchedMoviesList watched={watched} />
+                <WatchedMoviesList
+                  watched={watched}
+                  handleDelete={handleDelete}
+                  handleClickMovie={handleClickMovie}
+                />
               </>
             )}
           </Box>

@@ -8,15 +8,15 @@ interface WatchedSummaryProp {
 const WatchedSummary = (prop: WatchedSummaryProp) => {
   const { watched } = prop;
   const length = watched?.length || 0;
-  const avgImdbRating = average(watched.map((w) => w.imdbRating));
-  const avgRunTime = average(watched.map((w) => w.Runtime));
-  const avgUserRating = average(watched.map((w) => w.Userrating));
+  const avgImdbRating = average(watched.map((w) => w.imdbRating)) || 0;
+  const avgRunTime = average(watched.map((w) => w.Runtime)) || 0;
+  const avgUserRating = average(watched.map((w) => w.Userrating)) || 0;
   return (
     <div className="text-white shadow-2xl py-2 w-45 md:w-65 lg:w-100 bg-gray-600 flex flex-col gap-3 -mt-6 rounded-lg">
       <h3 className="pl-1.5 md:pl-2.5 lg:pl-10 text-sm md:text-lg lg:text-xl">
         MOVIES YOU WATCHED
       </h3>
-      <div className="flex flex-row justify-center gap-2 lg:gap-4 text-[10px] md:text-[14px] lg:text-lg">
+      <div className="flex flex-row justify-center gap-2 lg:gap-4 text-[10px] md:text-sm lg:text-lg">
         <p className="flex flex-col items-center">
           <span>{length}</span>
           <span>movies</span>

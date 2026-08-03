@@ -2,9 +2,9 @@ interface MovieDetailsType {
   Poster: string;
   Title: string;
   Released: string;
-  Runtime: string;
+  Runtime: number;
   Genre: string;
-  imdbRating: string;
+  imdbRating: number;
   Plot: string;
   Actors: string;
   Director: string;
