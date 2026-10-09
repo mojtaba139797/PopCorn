@@ -42,9 +42,9 @@ function App() {
     setWatched((prev) => prev.filter((w) => w.imdbID !== imdbId));
   };
 
-  const API = `http://www.omdbapi.com/?s=${query}&apikey=6a8851aa`;
+  const API = `https://www.omdbapi.com/?s=${query}&apikey=6a8851aa`;
 
-  const DetailsApi = `http://www.omdbapi.com/?i=${selectedId}&apikey=6a8851aa`;
+  const DetailsApi = `https://www.omdbapi.com/?i=${selectedId}&apikey=6a8851aa`;
 
   useEffect(() => {
     if (selectedId === undefined) return;
